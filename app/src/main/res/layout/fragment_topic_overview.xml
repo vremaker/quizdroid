@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:id="@+id/topicFrag"
+             android:layout_height="match_parent"
+             tools:context=".topic_overview">
+
+    <TextView
+            android:text="This is my topic"
+            android:layout_width="match_parent"
+            android:layout_height="112dp"
+            android:id="@+id/topic"
+
+            android:typeface="serif"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccent"
+            android:gravity="center"
+    />
+    <TextView
+            android:text="This is a blurb about the topic "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/about"
+            android:textSize="20sp"
+            android:textColor="@color/white" android:gravity="center" android:layout_gravity="center|top"
+            android:layout_marginTop="150dp"/>
+
+    <Button
+            android:text="Begin"
+            android:layout_width="233dp"
+            android:layout_height="86dp"
+            android:id="@+id/begin"
+            android:textSize="45sp"
+            android:background="@color/colorAccent"
+
+            android:lineSpacingExtra="14sp"
+            android:layout_gravity="bottom|center" android:layout_marginBottom="25dp"/>
+
+    <TextView
+            android:text="######"
+            android:layout_width="match_parent"
+            android:id="@+id/num"
+
+            android:gravity="bottom|center"
+            android:textSize="20sp"
+
+            android:textColor="@color/white" android:layout_height="@android:dimen/app_icon_size"
+            android:bufferType="editable" android:layout_gravity="center" android:layout_marginTop="30dp"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideline"
+
+            android:orientation="vertical"/>
+
+
+</FrameLayout>
