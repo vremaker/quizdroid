@@ -4,6 +4,7 @@
 
     <application
             android:allowBackup="true"
+            android:name=".QuizApp"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
@@ -16,12 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".TopicOverview"
+        <activity android:name=".all_the_things"
             android:parentActivityName=".MainActivity"></activity>
-        <activity android:name=".Question"
-                  android:parentActivityName=".MainActivity"></activity>
-        <activity android:name=".Answer"
-                  android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

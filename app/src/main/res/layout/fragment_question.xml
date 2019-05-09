@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:id="@+id/questy"
+             tools:context=".question"
+            android:orientation="vertical">
+
+    <TextView
+            android:text="My Question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="40dp"
+            android:id="@+id/question"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textColor="@color/white"/>
+
+    <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginEnd="8dp"
+            android:id="@+id/radioGroup" android:layout_gravity="center">
+
+        <RadioButton
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/answer1"
+                android:text="the first answer"
+                android:textSize="20sp"
+                android:textColor="@color/white" android:baselineAligned="false"/>
+
+        <RadioButton
+                android:layout_width="333dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/answer2"
+                android:text="second"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
+
+        <RadioButton
+                android:layout_width="341dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/answer3"
+                android:text="the third answer"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
+
+        <RadioButton
+                android:layout_width="331dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/answer4"
+                android:text="the fourth answer"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
+
+    </RadioGroup>
+
+    <Button
+            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:text="Submit"
+            android:id="@+id/submit"
+            android:background="@color/colorAccent"
+            android:textColor="@color/white" android:layout_gravity="bottom|center" android:layout_marginBottom="50dp"/>
+</FrameLayout>
