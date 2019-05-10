@@ -9,7 +9,7 @@ import android.content.Intent
 import android.widget.*
 
 
-var array = arrayOf("Math", "Physics", "Marvel Super Heroes", "Bean Facts", "Your Mom")
+var array = arrayOf("Math", "Physics", "Marvel Super Heroes")
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,9 +23,12 @@ class MainActivity : AppCompatActivity() {
             override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 val itemValue = listView.getItemAtPosition(position) as String
                 val intent = Intent(this@MainActivity, all_the_things::class.java)
-                intent.putExtra("topic", itemValue);
+                intent.putExtra("topic", itemValue)
                 startActivity(intent)
             }
         }
     }
 }
+
+
+

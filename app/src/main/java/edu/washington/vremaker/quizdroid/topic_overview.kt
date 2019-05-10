@@ -1,5 +1,6 @@
 package edu.washington.vremaker.quizdroid
 
+
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -47,32 +48,14 @@ class topic_overview : Fragment() {
         // Inflate the layout for this fragment
         var rootView = inflater.inflate(R.layout.fragment_topic_overview, container, false)
         arguments?.let {
+            val allTheData= QuizApp.instance.cryBoi.get()
             val topic = it.getString("topic")
             val topicHead = rootView.findViewById<TextView>(R.id.topic)
             topicHead.text = topic //COME BACK AND FIX WITH ACTUAL TOPIC
             val descript = rootView.findViewById<TextView>(R.id.about)
             val num = rootView.findViewById<TextView>(R.id.num)
-            Log.e("REEEE TOPIOC", topic)
-            if (topic.equals("Math")) {
-                descript.text =
-                    "This is the math section. You will be doing math. I still barely know my multiplication tables. Don't be like me"
-                num.text = "There are 2 Questions"
-            } else if (topic.equals("Phyics")) {
-                descript.text = "Physics is hard. But these questions shouldn't be too bad. Maybe I'm lying though"
-                num.text = "There are 2 questions"
-            } else if (topic.equals("Marvel Super Heroes")) {
-                descript.text = "I've only seen like 2 Marvel movies, so these questions are going to suck. That is all"
-                num.text = "There are 2 Questions"
-            } else if (topic.equals("Bean Facts")) {
-                descript.text =
-                    "Beans Beans the magical fruit. The more you eat the more you toot. The more you toot the better you feel," +
-                            " so answer all these bean questions correctly"
-                num.text = "There are 2 Questions"
-            } else { /*your mom */
-                descript.text =
-                    "The answer to all of these questions is your mom. If you get any of these wrong, I WILL be upset with you"
-                num.text = "There are 2 Questions"
-            }
+            descript.text = allTheData[0].long
+            num.text = allTheData[0].short
             val button = rootView.findViewById<Button>(R.id.begin)
             button.setOnClickListener(){
                 Log.e("BUTTON PRESS", topic)
