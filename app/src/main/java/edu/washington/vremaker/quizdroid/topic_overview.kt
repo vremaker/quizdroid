@@ -19,7 +19,7 @@ class topic_overview : Fragment() {
 
     private var callback: startListener? = null
     interface startListener {
-        fun toQuestion(topic: String)
+        fun toQuestion(topic: String, index:Int)
     }
 
     override fun onAttach(context: Context?) {
@@ -31,9 +31,10 @@ class topic_overview : Fragment() {
     }
 
     companion object {
-        fun newInstance(topic: String): topic_overview {
+        fun newInstance(topic: String, position: Int): topic_overview {
             val args = Bundle().apply {
                 putString("topic", topic)
+                putString("integer", position.toString())
             }
 
             val fragment = topic_overview().apply {
@@ -50,16 +51,18 @@ class topic_overview : Fragment() {
         arguments?.let {
             val allTheData= QuizApp.instance.cryBoi.get()
             val topic = it.getString("topic")
+            val index = it.getString("integer").toInt()
+            Log.e("OPE", index.toString())
             val topicHead = rootView.findViewById<TextView>(R.id.topic)
             topicHead.text = topic //COME BACK AND FIX WITH ACTUAL TOPIC
             val descript = rootView.findViewById<TextView>(R.id.about)
             val num = rootView.findViewById<TextView>(R.id.num)
-            descript.text = allTheData[0].long
-            num.text = allTheData[0].short
+            descript.text = allTheData[index].long
+            num.text = allTheData[index].short
             val button = rootView.findViewById<Button>(R.id.begin)
             button.setOnClickListener(){
                 Log.e("BUTTON PRESS", topic)
-                callback!!.toQuestion(topic)
+                callback!!.toQuestion(topic, index)
             }
         }
         return rootView

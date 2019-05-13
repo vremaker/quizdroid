@@ -18,14 +18,14 @@ class question : Fragment() {
 
 
     interface answerListener{
-        fun toAnswer(topic: String, your: String, correct: String, numCorrect: String, numTotal:String)
+        fun toAnswer(topic: String, your: String, correct: String, numCorrect: String, numTotal:String, index:Int)
     }
 
     companion object {
-        fun newInstance(topic: String, numCorrect: String, numberComplete: String): question {
+        fun newInstance(topic: String, index: Int, numCorrect: String, numberComplete: String): question {
             val args = Bundle().apply {
                 putString("topic", topic)
-                Log.e("OBJECT", topic)
+                putString("index", index.toString())
                 putString("numCorrect", numCorrect)
                 putString("numberComplete", numberComplete)
                 putString("numberComplete", numberComplete)
@@ -53,18 +53,15 @@ class question : Fragment() {
         var rootView = inflater.inflate(R.layout.fragment_question, container, false)
 
         arguments?.let {
-            val allTheData: QuestionDATA
+
+            val index = it.getString("index").toInt()
             var question = rootView.findViewById<TextView>(R.id.question)
             var radio1 = rootView.findViewById<RadioButton>(R.id.answer1)
             var radio2 = rootView.findViewById<RadioButton>(R.id.answer2)
             var radio3 = rootView.findViewById<RadioButton>(R.id.answer3)
             var radio4 = rootView.findViewById<RadioButton>(R.id.answer4)
             var radioGroup = rootView.findViewById<RadioGroup>(R.id.radioGroup)
-            if(numberCompleted === 0) {
-                allTheData= QuizApp.instance.cryBoi.get()[0].questions[0]
-            } else {
-                allTheData= QuizApp.instance.cryBoi.get()[0].questions[1]
-            }
+            val allTheData: QuestionDATA = QuizApp.instance.cryBoi.get()[index].questions[numberCompleted]
             question.text = allTheData.question
             radio1.text = allTheData.choices[0]
             radio2.text = allTheData.choices[1]
@@ -78,12 +75,12 @@ class question : Fragment() {
                     submit.setVisibility(View.VISIBLE)
 
                     submit.setOnClickListener() {
-                        if (yourAns.text.equals(allTheData.choices[allTheData.correct])) {
+                        if (yourAns.text.equals(allTheData.choices[allTheData.correct.toInt()])) {
                             numberCorrect++
                         }
                         numberCompleted++
-                        callback!!.toAnswer(QuizApp.instance.cryBoi.get()[0].topic, yourAns.text.toString(),
-                            allTheData.choices[allTheData.correct], numberCorrect.toString(), numberCompleted.toString())
+                        callback!!.toAnswer(QuizApp.instance.cryBoi.get()[index].topic, yourAns.text.toString(),
+                            allTheData.choices[allTheData.correct.toInt()], numberCorrect.toString(), numberCompleted.toString(), index)
                     }
                 })
         }

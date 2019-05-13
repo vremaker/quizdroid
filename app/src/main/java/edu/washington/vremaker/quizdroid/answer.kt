@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.util.Log
 import kotlinx.android.synthetic.main.fragment_answer.*
 
 
@@ -17,7 +18,7 @@ class answer : Fragment() {
     private var callback: whatNextListener? = null
 
     interface whatNextListener {
-        fun whatNext(topic:String, numberCompleted: String)
+        fun whatNext(topic:String, numberCompleted: String, index: Int)
     }
 
     override fun onAttach(context: Context?) {
@@ -29,13 +30,15 @@ class answer : Fragment() {
     }
 
     companion object {
-        fun newInstance(topic: String, your: String, correct: String, numCorrect: String, numTot: String): answer {
+        fun newInstance(topic: String, your: String, correct: String, numCorrect: String, numTot: String, index: Int): answer {
             val args = Bundle().apply {
                 putString("topic", topic)
                 putString("your", your)
                 putString("correct", correct)
                 putString("numCorrect", numCorrect)
                 putString("numTotal", numTot)
+                putString("index", index.toString())
+
             }
 
             val fragment = answer().apply {
@@ -52,11 +55,13 @@ class answer : Fragment() {
 
         arguments?.let {
             //Params passed in
+            val allTheData = QuizApp.instance.cryBoi.get()
             val yourAnsw = it.getString("your")
             val topic = it.getString("topic")
             val numTot = it.getString("numTotal")
             val numCorrect = it.getString("numCorrect")
             val correct = it.getString("correct")
+            val index = it.getString("index").toInt()
             //Dom elements
             var nextQuest = rootView.findViewById<Button>(R.id.next)
             var corr = rootView.findViewById<TextView>(R.id.correct)
@@ -68,11 +73,11 @@ class answer : Fragment() {
             your.text = "Your Answer was " + yourAnsw
             corr.text = "The Correct Answer was " + correct
             score.text = scoreString
-            if (numTot.equals("2")) {
+            if (numTot.equals(allTheData[index].questions.size.toString())) {
                 nextQuest.text = "Finish"
             }
             nextQuest.setOnClickListener() {
-                callback!!.whatNext(topic, numberCompleted.toString())
+                callback!!.whatNext(topic, numberCompleted.toString(), index)
             }
         }
 
