@@ -19,6 +19,8 @@
         </activity>
         <activity android:name=".all_the_things"
                   android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".PreferencesActivity"
+                  android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

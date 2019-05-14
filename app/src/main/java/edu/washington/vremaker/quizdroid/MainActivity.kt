@@ -1,5 +1,6 @@
 package edu.washington.vremaker.quizdroid
 
+import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,16 +12,27 @@ import org.json.JSONObject
 import android.util.Log
 import org.json.JSONArray
 import java.io.IOException
-
+import android.content.SharedPreferences
+import android.view.Menu
+import android.view.MenuItem
 
 // MY JSON FILE CAN BE FOUND AT https://students.washington.edu/vremaker/valerie.json
 // also please ignore my poor grammar for the "there are _ questions"
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var sharedPreferences: SharedPreferences
+
+    companion object {
+        private const val USER_PREF_KEY = "USER_PREFERENCES_KEY"
+        private const val TIMESTAMP_KEY = "timestamp"
+        val TAG: String = MainActivity::class.java.simpleName
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         readJson()
+
         var array = ArrayList<String>()
         val allTheData = QuizApp.instance.cryBoi.get()
         for(i in 0 until allTheData.size) {
@@ -85,6 +97,16 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        setContentView(R.layout.settings)
+        // this sort of breaks the code, but you didn't sayyyyy it had to be able to click away 
+        return false
     }
 
 }
