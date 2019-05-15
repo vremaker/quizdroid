@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="edu.washington.vremaker.quizdroid">
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
             android:allowBackup="true"
             android:name=".QuizApp"
@@ -19,7 +20,7 @@
         </activity>
         <activity android:name=".all_the_things"
                   android:parentActivityName=".MainActivity"></activity>
-        <activity android:name=".PreferencesActivity"
+        <activity android:name=".SettingsActivity"
                   android:parentActivityName=".MainActivity"></activity>
     </application>
 

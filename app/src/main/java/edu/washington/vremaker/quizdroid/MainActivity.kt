@@ -104,9 +104,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        setContentView(R.layout.settings)
-        // this sort of breaks the code, but you didn't sayyyyy it had to be able to click away 
-        return false
+        when (item?.itemId) {
+            R.id.menu_item_settings -> {
+                Log.d(TAG, "Settings menu pressed")
+                startActivity(Intent(this, SettingsActivity::class.java))
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+
     }
 
 }
