@@ -1,5 +1,6 @@
 package edu.washington.vremaker.quizdroid
 
+import android.content.ComponentName
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -13,7 +14,9 @@ import android.util.Log
 import org.json.JSONArray
 import java.io.IOException
 import android.content.SharedPreferences
+import android.os.IBinder
 import android.view.Menu
+import android.content.ServiceConnection
 import android.view.MenuItem
 
 // MY JSON FILE CAN BE FOUND AT https://students.washington.edu/vremaker/valerie.json
@@ -22,21 +25,27 @@ import android.view.MenuItem
 
 class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
-
+    private lateinit var nService: DownloadService
+    private var nServiceBound: Boolean = false
     companion object {
         private const val USER_PREF_KEY = "USER_PREFERENCES_KEY"
         private const val TIMESTAMP_KEY = "timestamp"
         val TAG: String = MainActivity::class.java.simpleName
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+
+        // start that young service here
+        val intent = Intent(this@MainActivity, DownloadService::class.java)
+        startService(intent)
         readJson()
 
         var array = ArrayList<String>()
         val allTheData = QuizApp.instance.cryBoi.get()
-        for(i in 0 until allTheData.size) {
-            if(!array.contains(allTheData[i].topic)) {
+        for (i in 0 until allTheData.size) {
+            if (!array.contains(allTheData[i].topic)) {
                 array.add(allTheData[i].topic)
             }
         }
@@ -47,7 +56,6 @@ class MainActivity : AppCompatActivity() {
         listView.onItemClickListener = object : OnItemClickListener {
             override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 val itemValue = listView.getItemAtPosition(position) as String
-
                 val intent = Intent(this@MainActivity, all_the_things::class.java)
                 intent.putExtra("topic", itemValue)
                 intent.putExtra("integer", position.toString())
@@ -55,6 +63,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     fun readJson() {
         val jsonString: String? = try {
             // grab file from assets folder & read it to a String
@@ -76,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                 val title = joosObject.get("title")
                 val description = joosObject.get("desc")
                 val questions = joosObject.get("questions").toString()
-                val questionDataArray  = ArrayList<QuestionDATA>()
+                val questionDataArray = ArrayList<QuestionDATA>()
                 val questionArray = JSONArray(questions)
                 for (i in 0 until questionArray.length()) {
                     val questObj = questionArray.get(i) as JSONObject
@@ -85,19 +94,25 @@ class MainActivity : AppCompatActivity() {
                     val answerString = questObj.get("answers").toString()
                     val answerArray = JSONArray(answerString)
                     val addArray = ArrayList<String>()
-                    for(i in 0 until answerArray.length()){
+                    for (i in 0 until answerArray.length()) {
                         addArray.add(answerArray.get(i).toString())
                     }
                     val addMe = QuestionDATA(text, addArray, answer)
                     allTheQuestions.add(addMe)
                 }
-                var myTopic = Topic(title.toString(), "There are " + allTheQuestions.size + " questions", description.toString() ,allTheQuestions)
+                var myTopic = Topic(
+                    title.toString(),
+                    "There are " + allTheQuestions.size + " questions",
+                    description.toString(),
+                    allTheQuestions
+                )
                 Log.e("KILL ", myTopic.toString())
                 QuizApp.instance.cryBoi.add(myTopic)
 
             }
         }
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return true
@@ -112,10 +127,9 @@ class MainActivity : AppCompatActivity() {
             }
             else -> return super.onOptionsItemSelected(item)
         }
-
     }
-
 }
+
 
 
 
