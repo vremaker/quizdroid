@@ -48,12 +48,7 @@ class MainActivity : AppCompatActivity()  {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
         super.onCreate(savedInstanceState)
-
-        // start that young service here
-        //check for airplane mode here
         if (isExternalStorageWritable()) {
             //check permission to write
             val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -68,10 +63,7 @@ class MainActivity : AppCompatActivity()  {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WRITE_REQUEST_CODE)
             }
         }
-
-
         readJson()
-
         var array = ArrayList<String>()
         val allTheData = QuizApp.instance.cryBoi.get()
         for (i in 0 until allTheData.size) {
@@ -136,7 +128,6 @@ class MainActivity : AppCompatActivity()  {
                     description.toString(),
                     allTheQuestions
                 )
-                Log.e("KILL ", myTopic.toString())
                 QuizApp.instance.cryBoi.add(myTopic)
 
             }

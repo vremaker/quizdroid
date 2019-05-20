@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <EditTextPreference
+    <SwitchPreference
+            android:defaultValue="false"
+            android:title="Airplane Mode" android:key="airplane mode"/>
+    <EditTextPreference
                 android:defaultValue="4"
                 android:selectAllOnFocus="true"
                 android:singleLine="true"
@@ -12,5 +15,6 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="URL for Question Data" android:key="Url"/>
+
 
 </PreferenceScreen>

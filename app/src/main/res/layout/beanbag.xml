@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+
+    <Button
+            android:text="Turn Airplane Mode Off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/airplaneMode" android:layout_marginTop="72dp"
+            app:layout_constraintTop_toBottomOf="@+id/error" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="42dp" android:layout_marginStart="42dp" android:layout_marginBottom="12dp"
+            app:layout_constraintBottom_toTopOf="@+id/goHome" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="43dp" android:layout_marginRight="43dp"
+    />
+    <TextView
+            android:text="You Are In Airplane mode. We cannot download your file. "
+            android:layout_width="348dp"
+            android:layout_height="161dp"
+            android:id="@+id/error" android:textSize="30sp"
+            android:textStyle="bold" android:gravity="center" android:layout_marginTop="69dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="31dp" android:layout_marginStart="31dp" android:layout_marginBottom="72dp"
+            app:layout_constraintBottom_toTopOf="@+id/airplaneMode" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="32dp" android:layout_marginRight="32dp"
+            app:layout_constraintHorizontal_bias="0.0"/>
+    <Button
+            android:text="go Back to the homepage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/goHome"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="197dp"
+            android:layout_marginTop="29dp" app:layout_constraintTop_toBottomOf="@+id/airplaneMode"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="97dp"
+            android:layout_marginStart="97dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="98dp"
+            android:layout_marginRight="98dp"/>
+</android.support.constraint.ConstraintLayout>
