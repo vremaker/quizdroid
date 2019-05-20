@@ -1,5 +1,6 @@
 package edu.washington.vremaker.quizdroid
 
+import android.Manifest
 import android.content.ComponentName
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
@@ -11,19 +12,29 @@ import android.content.Intent
 import android.widget.*
 import org.json.JSONObject
 import android.util.Log
+import android.provider.Settings.System
+import java.lang.Object
+
 import org.json.JSONArray
 import java.io.IOException
 import android.content.SharedPreferences
 import android.os.IBinder
 import android.view.Menu
 import android.content.ServiceConnection
+import android.content.pm.PackageManager
 import android.view.MenuItem
+import android.net.Uri
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
+import android.os.Environment
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 
 // MY JSON FILE CAN BE FOUND AT https://students.washington.edu/vremaker/valerie.json
 // also please ignore my poor grammar for the "there are _ questions"
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity()  {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var nService: DownloadService
     private var nServiceBound: Boolean = false
@@ -33,13 +44,32 @@ class MainActivity : AppCompatActivity() {
         val TAG: String = MainActivity::class.java.simpleName
     }
 
+    private val WRITE_REQUEST_CODE = 1
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
 
         super.onCreate(savedInstanceState)
 
         // start that young service here
-        val intent = Intent(this@MainActivity, DownloadService::class.java)
-        startService(intent)
+        //check for airplane mode here
+        if (isExternalStorageWritable()) {
+            //check permission to write
+            val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                //have permission, can go ahead and do stuff
+                Log.v(TAG, "Permission granted!")
+                val intent = Intent(this@MainActivity, DownloadService::class.java)
+                startService(intent)
+               // saveToExternalFile()
+            } else { //if we're missing permission.
+                Log.v(TAG, "Permission denied!")
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WRITE_REQUEST_CODE)
+            }
+        }
+
+
         readJson()
 
         var array = ArrayList<String>()
@@ -127,6 +157,9 @@ class MainActivity : AppCompatActivity() {
             }
             else -> return super.onOptionsItemSelected(item)
         }
+    }
+    fun isExternalStorageWritable(): Boolean {
+        return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
     }
 }
 
